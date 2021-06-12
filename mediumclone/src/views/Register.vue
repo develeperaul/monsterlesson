@@ -63,7 +63,16 @@ export default {
     methods: {
         onSubmit(){
             console.log("submited");
-            this.$store.commit('registerStart')
+            this.$store.dispatch ('register',
+                {
+                    email: 'sadsda@gsdfsdffngkdfsdk.ru',
+                    username: 'dflkgjdkrfgndiurhg',
+                    password: 'kdjfskjdnfk'
+                })
+                .then(user=>{
+                    console.log('successfully register user', user)
+                })
+
         },
         
     },
