@@ -57,7 +57,7 @@
                     </router-link>
                 </li>          
                 </template>
-                <template v-if="!isLogedIn">
+                <template v-if="isAnonymous">
                     <li class="nav-item">
                         <router-link 
                             class="nav-link"
@@ -82,14 +82,19 @@
     </nav>
 </template>
 <script>
-import {mapState} from 'vuex';
+import {getterTypes} from '@/store/modules/auth'
+import {mapGetters} from 'vuex';
+
+
 export default {
     name: 'McvTopBar',
     computed:{
-        ...mapState({
-            currentUser: state=> state.auth.currentUser,
-            isLogedIn:  state=> state.auth.isLogedIn,
+        ...mapGetters({
+            currentUser: getterTypes.currentUser,
+            isLogedIn: getterTypes.isLogedIn,
+            isAnonymous: getterTypes.isAnonymous
         })
+        
     }
 }
 </script>
