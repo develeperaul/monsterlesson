@@ -5,9 +5,7 @@ axios.defaults.baseURL = 'https://conduit.productionready.io/api';
 
 axios.interceptors.request.use(config => {
     const token = getItem('accessToken');
-    console.log(token)
     const authorizationToken = token ? `Token ${token}` : '';
-    console.log(authorizationToken)
     
     config.headers.Authorization = authorizationToken
     return config
