@@ -51,7 +51,7 @@
 <script>
 
 import McvValidationError from '@/components/ValidationErrors';
-import {actionTypes} from '@/store/modules/auth'
+import {actionTypes} from '@/store/modules/auth' 
 import { mapState } from 'vuex';
 export default {
     name: 'McvRegister',
@@ -86,7 +86,8 @@ export default {
                     password: this.password 
                 })
                 .then(()=>{
-                    this.$router.push({name: 'home'});
+                    console.log('Hi Ural')
+                    this.$router.push({name: 'globalFeed'});
                 })
 
         },
