@@ -39,30 +39,74 @@
                     TAG LIST
                 </router-link> 
             </div>
-            PAGINATION 
+            <McvPagination
+                :total="feed.articlesCount"
+                :limit="limit"
+                :currentPage="currentPage"
+                :url="BaseUrl"
+            />
         </div>
     </div>
 </template>
 <script>
+import McvPagination from '@/components/Pagination'
 import {actionTypes} from '@/store/modules/feed'
-import {mapState} from 'vuex'
+import {mapState} from 'vuex';
+import {limit} from '@/helpers/vars';
+import {stringify, parseUrl} from 'query-string'
 export default {
     name: 'McvFeed',
+    components: {
+        McvPagination
+    },
     props:{
         apiURL:{
             required: true,
             type: String
         }
     },
-    mounted(){
-        this.$store.dispatch(actionTypes.getFeed, {apiURL:this.apiURL})
+    data(){
+        return {
+            limit,
+        }
     },
+
     computed: {
         ...mapState({
             isLoading: state => state.feed.isLoading,
             feed: state => state.feed.data,
             error: state => state.feed.error
-        })
+        }),
+        currentPage(){
+            return Number(this.$route.query.page || '1')
+        },
+        BaseUrl(){
+            return this.$route.path
+        },
+        offset(){
+            return this.currentPage * limit - limit
+        }
+    },
+    methods:{
+        fetchFeed(){
+            const parsedUrl = parseUrl(this.apiURL)
+            const stringifieldParams = stringify({
+                limit, 
+                offset: this.offset,
+                ...parsedUrl.query
+            })
+            console.log(stringifieldParams)
+            const apiWithParams = `${parsedUrl.url}?${stringifieldParams}`
+            this.$store.dispatch(actionTypes.getFeed, {apiURL:apiWithParams})
+        }
+    },
+    mounted(){
+        this.fetchFeed();
+    },
+    watch:{
+        currentPage(){
+            this.fetchFeed();
+        }
     }
 }
 </script>
