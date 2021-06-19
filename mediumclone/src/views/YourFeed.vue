@@ -4,7 +4,7 @@
         <div class="container page">
             <div class="row">
                 <div class="col-md-9">
-                    <McvFeedToggler />
+                    <McvFeedToggler/>
                     <McvFeed :apiURL="apiURL"/>
                 </div>
                 <div class="col-md-3">
@@ -22,7 +22,7 @@ import McvBanner from '@/components/Banner'
 import McvFeedToggler from '@/components/FeedToggler'
 
 export default {
-    name: 'McvGlobaLFeed',
+    name: 'McvYouFeed',
     components: {
         McvFeed, 
         McvPopularTag,
@@ -31,7 +31,7 @@ export default {
     },
     data(){
         return {
-            apiURL: '/articles'
+            apiURL: '/articles/feed'
         }
     }
 }

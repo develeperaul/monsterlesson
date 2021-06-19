@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div v-if="isLoading">Loading ...</div>
+        <McvLoading  v-if="isLoading"/>
         
-        <div v-if="error"> Это поле вызвало ошибку</div>
-
+        
+        <McvMessage v-if="error"/>
         <div v-if="feed">
             <div 
                 class="article-preview" 
@@ -53,11 +53,16 @@ import McvPagination from '@/components/Pagination'
 import {actionTypes} from '@/store/modules/feed'
 import {mapState} from 'vuex';
 import {limit} from '@/helpers/vars';
-import {stringify, parseUrl} from 'query-string'
+import {stringify, parseUrl} from 'query-string';
+import McvLoading from '@/components/Loading';
+import McvMessage from '@/components/ErrorMessage'
+
 export default {
     name: 'McvFeed',
     components: {
-        McvPagination
+        McvPagination,
+        McvLoading, 
+        McvMessage
     },
     props:{
         apiURL:{
@@ -107,6 +112,7 @@ export default {
         currentPage(){
             this.fetchFeed();
         }
-    }
+    },
+
 }
 </script>
